@@ -1,18 +1,33 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="futuristic">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detector & Escáner de IA para Profesores</title>
+    <title>Innova EduIA - Cuestionario Inverso</title>
     <style>
-        /* --- ESTILIZACIÓN PREMIUM DE HERRAMIENTAS DE ANÁLISIS --- */
-        :root {
-            --bg-main: #0b0f19;
-            --bg-card: #131a26;
-            --accent-green: #39ec85;
-            --accent-red: #ff5e62;
-            --text-light: #f1f5f9;
-            --border-color: #222f47;
+        /* --- DISEÑO COMPLETO Y RESPONSIVO (CSS) --- */
+        :root[data-theme="futuristic"] {
+            --bg-glow: radial-gradient(circle at 50% 50%, #1a233a 0%, #0d1117 100%);
+            --bg-color: #0d1117;
+            --text-color: #e6edf3;
+            --primary-color: #00f2fe;
+            --secondary-color: #4facfe;
+            --container-bg: rgba(22, 27, 34, 0.85);
+            --border-color: #30363d;
+            --input-bg: #1f242c;
+            --button-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+
+        :root[data-theme="pastel"] {
+            --bg-glow: linear-gradient(135deg, #fdf6e3 0%, #eee8d5 100%);
+            --bg-color: #fdf6e3;
+            --text-color: #4f5d65;
+            --primary-color: #ffb7b2;
+            --secondary-color: #b5e2b7;
+            --container-bg: rgba(255, 255, 255, 0.9);
+            --border-color: #e4dcd3;
+            --input-bg: #f5efe6;
+            --button-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -22,244 +37,327 @@
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-light);
-            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            padding: 20px;
+            background: var(--bg-glow);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .scanner-card {
-            width: 100%;
-            max-width: 680px;
-            background-color: var(--bg-card);
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2rem;
+            background-color: var(--container-bg);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls button {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 750px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background-color: var(--container-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
-        h2 {
-            font-size: 1.8rem;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            color: #fff;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #8fa0dd;
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-        }
-
-        /* --- ZONA DROP DE ARCHIVOS --- */
-        .drop-zone {
-            border: 2px dashed #3b527a;
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            background-color: rgba(255,255,255,0.02);
+        h2, h3 {
             margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 700;
         }
 
-        .drop-zone:hover, .drop-zone.drag-over {
-            border-color: var(--accent-green);
-            background-color: rgba(57, 236, 133, 0.05);
+        .auth-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .drop-zone p {
-            font-size: 1rem;
-            color: #cbd5e1;
-            margin-top: 10px;
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        textarea {
+        input[type="text"], input[type="email"], input[type="password"] {
             width: 100%;
-            height: 120px;
-            background-color: #0b0f19;
-            color: #fff;
+            padding: 14px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 12px;
-            font-size: 0.95rem;
-            resize: none;
-            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
         }
 
         button {
-            width: 100%;
-            background: linear-gradient(90deg, #24c6dc, #514a9d);
-            color: #fff;
-            border: none;
-            padding: 15px;
-            font-size: 1.1rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: #111;
             font-weight: 600;
-            border-radius: 8px;
+            border: none;
+            padding: 14px 20px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: opacity 0.2s;
+            border-radius: 8px;
+            box-shadow: var(--button-shadow);
+            transition: transform 0.2s, opacity 0.3s;
+        }
+
+        :root[data-theme="pastel"] button {
+            color: #fff;
         }
 
         button:hover {
+            transform: translateY(-2px);
             opacity: 0.9;
         }
 
-        /* --- INDICADORES DE RESULTADO --- */
-        .result-box {
-            margin-top: 2rem;
-            padding: 20px;
-            background-color: #0b0f19;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            display: none;
+        .google-btn {
+            background: #fff;
+            color: #444;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .meter-container {
-            background-color: #222f47;
-            border-radius: 10px;
-            height: 24px;
-            width: 100%;
-            margin: 15px 0;
-            overflow: hidden;
-            position: relative;
+        hr {
+            border: 0;
+            height: 1px;
+            background: var(--border-color);
+            margin: 1.5rem 0;
         }
 
-        .meter-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--accent-green), var(--accent-red));
-            transition: width 1.5s ease-in-out;
-        }
-
-        .percentage-text {
-            font-size: 1.5rem;
-            font-weight: 700;
+        /* --- MASCOTA AVONNI --- */
+        .avonni-container {
             text-align: center;
-            margin-top: 5px;
+            margin-bottom: 2rem;
         }
 
-        /* --- RESPONSIVIDAD PARA DISPOSITIVOS --- */
-        @media (max-width: 600px) {
-            body { padding: 10px; }
-            .scanner-card { padding: 1.5rem; }
-            h2 { font-size: 1.4rem; }
-            .drop-zone { padding: 20px; }
+        #avonniMascot {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 25px var(--primary-color);
+            transition: all 0.5s ease;
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .avonni-container p {
+            margin-top: 10px;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        .response-box {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        /* --- ADAPTACIÓN RESPONSIVA (Móvil y Pantallas Grandes) --- */
+        @media (max-width: 768px) {
+            header { padding: 1rem; }
+            .logo { font-size: 1.3rem; }
+            .container { padding: 1.5rem; margin: 1rem auto; width: 95%; }
+            #avonniMascot { width: 110px; height: 110px; }
+            button, input { padding: 12px; font-size: 0.95rem; }
+        }
+
+        @media (min-width: 1400px) {
+            /* Optimización para MacBooks con pantallas de alta resolución y PCs de escritorio */
+            .container { max-width: 900px; padding: 3.5rem; }
+            body { font-size: 18px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="scanner-card">
-        <h2>Escáner de Integridad Académica</h2>
-        <div class="subtitle">Herramienta de Diagnóstico Artificial para Docentes</div>
+    <header>
+        <div class="logo">Innova EduIA</div>
+        <div class="controls">
+            <button id="themeToggle">Modo Día/Noche</button>
+            <button id="logoutBtn" style="display: none; background: transparent; color: var(--text-color); border: 1px solid var(--border-color); box-shadow: none;">Salir</button>
+        </div>
+    </header>
 
-        <div class="drop-zone" id="dropZone">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8fa0dd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-            <p>Arrastra trabajos, PPTs, capturas de pantalla o haz clic para buscar</p>
-            <span id="fileInfo" style="display:block; margin-top:8px; color:var(--accent-green); font-weight:600;"></span>
-            <input type="file" id="fileSelector" class="file-input" accept=".pdf, .docx, .doc, .txt, .ppt, .pptx, image/*">
+    <section id="authSection" class="container">
+        <h2>Ingreso al Sistema</h2>
+        <div class="auth-box">
+            <input type="email" id="emailInput" placeholder="Tu correo electrónico">
+            <input type="password" id="passwordInput" placeholder="Tu contraseña">
+            <button id="loginBtn">Iniciar Sesión</button>
+            <button id="registerBtn" style="background: transparent; color: var(--text-color); border: 1px solid var(--border-color); box-shadow: none;">Crear Cuenta Nueva</button>
+            <hr>
+            <button id="googleBtn" class="google-btn">Continuar con Google</button>
+        </div>
+        <div id="authMessage" style="color: #ff6b6b; text-align: center; margin-top: 15px; font-size: 0.9rem;"></div>
+    </section>
+
+    <section id="appSection" class="container" style="display: none;">
+        <div class="avonni-container">
+            <img id="avonniMascot" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTanSWB5jr0EODA8gRTdBTb5PojVyuR2HAlL5T9zAP8-kqe8Sm8DXTh7XI&s=10" alt="Avonni IA" class="floating">
+            <p id="avonniGreeting">¡Hola! Soy Avonni IA. Pon a prueba tus ideas conmigo.</p>
         </div>
 
-        <p style="text-align: center; margin-bottom: 0.8rem; font-size: 0.9rem; color:#64748b;">— O TAMBIÉN PUEDES PEGAR EL TEXTO —</p>
-        <textarea id="textPayload" placeholder="Pega los párrafos sospechosos de la exposición o informe aquí..."></textarea>
-
-        <button id="runAnalysis">Ejecutar Análisis Heurístico</button>
-
-        <div class="result-box" id="resultBlock">
-            <h3 style="text-align: left; font-size: 1.2rem;">Informe de Escaneo:</h3>
-            <div id="fileNameEvaluated" style="font-size: 0.9rem; opacity:0.8; margin-bottom: 10px;"></div>
-            
-            <div class="meter-container">
-                <div class="meter-bar" id="meterBar"></div>
+        <div id="quizModule">
+            <h3>Cuestionario Inverso Dinámico</h3>
+            <p style="margin-bottom: 1rem; text-align: center; font-size: 0.95rem; opacity: 0.8;">
+                Dime qué tema quieres aprender. No te daré la respuesta directa; generaré 4 preguntas estratégicas para que descubras el conocimiento por ti mismo.
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <input type="text" id="topicInput" placeholder="Ej: Las leyes de Newton, la tabla periódica, etc.">
+                <button id="askBtn">Generar Desafío</button>
             </div>
-            
-            <div class="percentage-text" id="percentageResult">0%</div>
-            <p id="verdictText" style="text-align: center; margin-top: 10px; font-weight: 500;"></p>
+            <div id="chatResponse" class="response-box" style="display: none;"></div>
         </div>
-    </div>
+    </section>
 
-    <script>
-        const dropZone = document.getElementById('dropZone');
-        const fileSelector = document.getElementById('fileSelector');
-        const fileInfo = document.getElementById('fileInfo');
-        const runAnalysis = document.getElementById('runAnalysis');
-        const resultBlock = document.getElementById('resultBlock');
-        const meterBar = document.getElementById('meterBar');
-        const percentageResult = document.getElementById('percentageResult');
-        const verdictText = document.getElementById('verdictText');
-        const fileNameEvaluated = document.getElementById('fileNameEvaluated');
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-        let selectedFile = null;
+        // Configuración de Firebase provista
+        const firebaseConfig = {
+            apiKey: "AIzaSyCVhhY19Co-XtLb-U3pp56aH1IWqViOjyg",
+            authDomain: "innova-eduia.firebaseapp.com",
+            projectId: "innova-eduia",
+            storageBucket: "innova-eduia.firebasestorage.app",
+            messagingSenderId: "947659215032",
+            appId: "1:947659215032:web:d53ac9e376ddd1d739244d"
+        };
 
-        // Triggers de subida de archivos
-        dropZone.addEventListener('click', () => fileSelector.click());
-        
-        fileSelector.addEventListener('change', (e) => {
-            if(e.target.files.length > 0) {
-                selectedFile = e.target.files[0];
-                fileInfo.innerText = `Archivo cargado: ${selectedFile.name}`;
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const GROQ_API_KEY = "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";
+
+        // Elementos DOM
+        const authSection = document.getElementById('authSection');
+        const appSection = document.getElementById('appSection');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const authMessage = document.getElementById('authMessage');
+
+        // Estado de Autenticación
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                authSection.style.display = 'none';
+                appSection.style.display = 'block';
+                logoutBtn.style.display = 'block';
+            } else {
+                authSection.style.display = 'block';
+                appSection.style.display = 'none';
+                logoutBtn.style.display = 'none';
             }
         });
 
-        // Eventos Drag & Drop
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('drag-over');
+        // Eventos Auth
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            const email = document.getElementById('emailInput').value;
+            const pass = document.getElementById('passwordInput').value;
+            if(!email || !pass) return;
+            signInWithEmailAndPassword(auth, email, pass).catch(err => authMessage.innerText = "Error: Credenciales incorrectas.");
         });
 
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('drag-over');
+        document.getElementById('registerBtn').addEventListener('click', () => {
+            const email = document.getElementById('emailInput').value;
+            const pass = document.getElementById('passwordInput').value;
+            if(!email || !pass) return;
+            createUserWithEmailAndPassword(auth, email, pass).then(() => {
+                authMessage.style.color = "green";
+                authMessage.innerText = "¡Cuenta creada con éxito!";
+            }).catch(err => authMessage.innerText = "Error: " + err.message);
         });
 
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('drag-over');
-            if(e.dataTransfer.files.length > 0) {
-                selectedFile = e.dataTransfer.files[0];
-                fileInfo.innerText = `Archivo detectado: ${selectedFile.name}`;
-            }
+        document.getElementById('googleBtn').addEventListener('click', () => {
+            signInWithPopup(auth, provider).catch(err => authMessage.innerText = "Error al conectar con Google.");
         });
 
-        // Simulación Matemática del Escaneo de IA
-        runAnalysis.addEventListener('click', () => {
-            const textContent = document.getElementById('textPayload').value.trim();
+        logoutBtn.addEventListener('click', () => signOut(auth));
+
+        // Transición de Ciclo Día / Noche e Intercambio de Imágenes de Avonni
+        let isNight = false;
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            isNight = !isNight;
+            const htmlElement = document.documentElement;
+            const mascot = document.getElementById('avonniMascot');
             
-            if(!selectedFile && !textContent) {
-                alert('Por favor inserta un fragmento de texto o arrastra un archivo / diapositiva.');
-                return;
+            if (isNight) {
+                htmlElement.setAttribute('data-theme', 'pastel');
+                mascot.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF0g1gu2OtwztjwyOTH8rFyUKQZ7AzocKcB2SMkbpzPvw31T0hD_wOobc&s=10";
+                document.getElementById('avonniGreeting').innerText = "Ciclo nocturno activo. Despeja tu mente descubriendo cosas nuevas.";
+            } else {
+                htmlElement.setAttribute('data-theme', 'futuristic');
+                mascot.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTanSWB5jr0EODA8gRTdBTb5PojVyuR2HAlL5T9zAP8-kqe8Sm8DXTh7XI&s=10";
+                document.getElementById('avonniGreeting').innerText = "¡Hola! Soy Avonni IA. Pon a prueba tus ideas conmigo.";
             }
+        });
 
-            resultBlock.style.display = 'block';
-            verdictText.innerText = "Analizando patrones de repetición sintáctica...";
-            percentageResult.innerText = "Calculando...";
-            meterBar.style.width = "0%";
+        // Consumo de API Groq (Formulación Estricta de 4 Preguntas)
+        document.getElementById('askBtn').addEventListener('click', async () => {
+            const topic = document.getElementById('topicInput').value;
+            const responseBox = document.getElementById('chatResponse');
+            
+            if(!topic) return;
+            responseBox.style.display = 'block';
+            responseBox.innerHTML = "<em>Avonni está formulando tus preguntas interactivas...</em>";
 
-            setTimeout(() => {
-                // Cálculo aleatorio inteligente para simular detección real por patrones
-                const generatedPercentage = Math.floor(Math.random() * 101);
-                
-                fileNameEvaluated.innerText = selectedFile ? `Origen: ${selectedFile.name}` : 'Origen: Cuadro de texto directo';
-                meterBar.style.width = `${generatedPercentage}%`;
-                percentageResult.innerText = `${generatedPercentage}%`;
+            const promptText = `El usuario quiere aprender sobre el tema: "${topic}". Como la inteligencia artificial Avonni, actúa como un tutor interactivo. NO le des la definición ni le des la respuesta directa bajo ninguna circunstancia. En su lugar, vas a formular exactamente un cuestionario de 4 preguntas de opción múltiple relacionadas con ese tema. Cada pregunta debe tener opciones claras indicando cuáles son correctas o incorrectas para guiar al estudiante a construir su propio conocimiento de manera didáctica. Termina con un mensaje motivador.`;
 
-                // Veredictos basados en rangos estándar profesionales
-                if (generatedPercentage < 20) {
-                    verdictText.innerHTML = `<span style="color: var(--accent-green)">Estructura Humana Confiable.</span> Patrones de lenguaje orgánicos y naturales.`;
-                } else if (generatedPercentage >= 20 && generatedPercentage <= 60) {
-                    verdictText.innerHTML = `<span style="color: #ffb74d">Uso de IA Moderado o Híbrido.</span> Posible uso de asistentes de IA para corrección de estilo o traducción de diapositivas.`;
-                } else {
-                    verdictText.innerHTML = `<span style="color: var(--accent-red)">Alta Probabilidad de Automatización.</span> Estructuras repetitivas y predictivas típicas de Modelos LLM masivos.`;
-                }
-            }, 1500);
+            try {
+                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${GROQ_API_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        model: "llama-3.1-8b-instant",
+                        messages: [{ role: "user", content: promptText }],
+                        temperature: 0.7
+                    })
+                });
+
+                const data = await response.json();
+                const structuredText = data.choices[0].message.content.replace(/\n/g, '<br>');
+                responseBox.innerHTML = `<div>${structuredText}</div>`;
+            } catch (error) {
+                responseBox.innerHTML = "Error al intentar enlazar con los sistemas de Avonni IA.";
+                console.error(error);
+            }
         });
     </script>
 </body>
