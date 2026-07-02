@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innova EduIA - Cuestionario Inverso</title>
+    <title>Innova EduIA - Cuestionario Interactivo</title>
     <style>
         /* --- DISEÑO COMPLETO Y RESPONSIVO (CSS) --- */
         :root[data-theme="futuristic"] {
@@ -16,6 +16,8 @@
             --border-color: #30363d;
             --input-bg: #1f242c;
             --button-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+            --option-bg: #21262d;
+            --option-hover: #30363d;
         }
 
         :root[data-theme="pastel"] {
@@ -28,178 +30,105 @@
             --border-color: #e4dcd3;
             --input-bg: #f5efe6;
             --button-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            --option-bg: #fff;
+            --option-hover: #f5efe6;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background: var(--bg-glow);
-            background-color: var(--bg-color);
+            background: var(--bg-glow); background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.2rem 2rem;
-            background-color: var(--container-bg);
-            border-bottom: 1px solid var(--border-color);
-            backdrop-filter: blur(10px);
-        }
-
-        .logo {
-            font-size: 1.6rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .controls button {
-            padding: 8px 16px;
-            font-size: 0.9rem;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 750px;
-            margin: 2rem auto;
-            padding: 2.5rem;
-            background-color: var(--container-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-
-        h2, h3 {
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-weight: 700;
-        }
-
-        .auth-box {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        input[type="text"], input[type="email"], input[type="password"] {
-            width: 100%;
-            padding: 14px;
-            background-color: var(--input-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        button {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: #111;
-            font-weight: 600;
-            border: none;
-            padding: 14px 20px;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 8px;
-            box-shadow: var(--button-shadow);
-            transition: transform 0.2s, opacity 0.3s;
-        }
-
-        :root[data-theme="pastel"] button {
-            color: #fff;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
-
-        .google-btn {
-            background: #fff;
-            color: #444;
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        hr {
-            border: 0;
-            height: 1px;
-            background: var(--border-color);
-            margin: 1.5rem 0;
-        }
-
-        /* --- MASCOTA AVONNI --- */
-        .avonni-container {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        #avonniMascot {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            box-shadow: 0 0 25px var(--primary-color);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh; display: flex; flex-direction: column;
             transition: all 0.5s ease;
         }
 
-        .floating {
-            animation: float 4s ease-in-out infinite;
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.2rem 2rem; background-color: var(--container-bg);
+            border-bottom: 1px solid var(--border-color); backdrop-filter: blur(10px);
         }
 
+        .logo {
+            font-size: 1.6rem; font-weight: 800;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .controls button { padding: 8px 16px; font-size: 0.9rem; }
+
+        .container {
+            width: 90%; max-width: 750px; margin: 2rem auto; padding: 2.5rem;
+            background-color: var(--container-bg); border: 1px solid var(--border-color);
+            border-radius: 16px; backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        h2, h3 { margin-bottom: 1.5rem; text-align: center; font-weight: 700; }
+
+        .auth-box { display: flex; flex-direction: column; gap: 12px; }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%; padding: 14px; background-color: var(--input-bg);
+            color: var(--text-color); border: 1px solid var(--border-color);
+            border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;
+        }
+
+        input:focus { outline: none; border-color: var(--primary-color); }
+
+        button {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: #111; font-weight: 600; border: none; padding: 14px 20px;
+            font-size: 1rem; cursor: pointer; border-radius: 8px;
+            box-shadow: var(--button-shadow); transition: transform 0.2s, opacity 0.3s;
+        }
+
+        :root[data-theme="pastel"] button { color: #fff; }
+        button:hover:not(:disabled) { transform: translateY(-2px); opacity: 0.9; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .google-btn { background: #fff; color: #444; border: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        hr { border: 0; height: 1px; background: var(--border-color); margin: 1.5rem 0; }
+
+        /* --- MASCOTA AVONNI --- */
+        .avonni-container { text-align: center; margin-bottom: 1.5rem; }
+        #avonniMascot {
+            width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+            box-shadow: 0 0 25px var(--primary-color); transition: all 0.5s ease;
+        }
+        .floating { animation: float 4s ease-in-out infinite; }
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-12px); }
             100% { transform: translateY(0px); }
         }
+        .avonni-container p { margin-top: 10px; font-style: italic; font-weight: 500; font-size: 1.1rem;}
 
-        .avonni-container p {
-            margin-top: 10px;
-            font-style: italic;
-            font-weight: 500;
+        /* --- INTERFAZ DEL CUESTIONARIO --- */
+        #interactiveQuiz { display: none; margin-top: 20px; }
+        .question-text { font-size: 1.3rem; margin-bottom: 20px; text-align: center; font-weight: 600;}
+        
+        .options-grid {
+            display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 20px;
         }
-
-        .response-box {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            line-height: 1.6;
-            overflow-x: auto;
+        
+        .option-btn {
+            background: var(--option-bg); color: var(--text-color);
+            border: 2px solid var(--border-color); padding: 15px;
+            border-radius: 10px; font-size: 1rem; text-align: left;
+            cursor: pointer; transition: all 0.2s; box-shadow: none;
         }
+        
+        .option-btn:hover:not(:disabled) { background: var(--option-hover); border-color: var(--primary-color); }
+        .option-btn.correct { background: #28a745 !important; color: white !important; border-color: #28a745 !important; }
+        .option-btn.incorrect { background: #dc3545 !important; color: white !important; border-color: #dc3545 !important; }
 
-        /* --- ADAPTACIÓN RESPONSIVA (Móvil y Pantallas Grandes) --- */
+        #nextBtnContainer { text-align: center; margin-top: 15px; }
+
         @media (max-width: 768px) {
-            header { padding: 1rem; }
-            .logo { font-size: 1.3rem; }
             .container { padding: 1.5rem; margin: 1rem auto; width: 95%; }
-            #avonniMascot { width: 110px; height: 110px; }
-            button, input { padding: 12px; font-size: 0.95rem; }
-        }
-
-        @media (min-width: 1400px) {
-            /* Optimización para MacBooks con pantallas de alta resolución y PCs de escritorio */
-            .container { max-width: 900px; padding: 3.5rem; }
-            body { font-size: 18px; }
+            .question-text { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -223,25 +152,37 @@
             <hr>
             <button id="googleBtn" class="google-btn">Continuar con Google</button>
         </div>
-        <div id="authMessage" style="color: #ff6b6b; text-align: center; margin-top: 15px; font-size: 0.9rem;"></div>
+        <div id="authMessage" style="color: #ff6b6b; text-align: center; margin-top: 15px;"></div>
     </section>
 
     <section id="appSection" class="container" style="display: none;">
         <div class="avonni-container">
             <img id="avonniMascot" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTanSWB5jr0EODA8gRTdBTb5PojVyuR2HAlL5T9zAP8-kqe8Sm8DXTh7XI&s=10" alt="Avonni IA" class="floating">
-            <p id="avonniGreeting">¡Hola! Soy Avonni IA. Pon a prueba tus ideas conmigo.</p>
+            <p id="avonniGreeting">¡Hola! Soy Avonni IA. ¿Qué tema quieres dominar hoy?</p>
         </div>
 
-        <div id="quizModule">
-            <h3>Cuestionario Inverso Dinámico</h3>
-            <p style="margin-bottom: 1rem; text-align: center; font-size: 0.95rem; opacity: 0.8;">
-                Dime qué tema quieres aprender. No te daré la respuesta directa; generaré 4 preguntas estratégicas para que descubras el conocimiento por ti mismo.
-            </p>
+        <div id="topicModule">
             <div style="display: flex; flex-direction: column; gap: 10px;">
-                <input type="text" id="topicInput" placeholder="Ej: Las leyes de Newton, la tabla periódica, etc.">
-                <button id="askBtn">Generar Desafío</button>
+                <input type="text" id="topicInput" placeholder="Ej: Programación orientada a objetos, Historia de Perú...">
+                <button id="askBtn">Comenzar Reto</button>
             </div>
-            <div id="chatResponse" class="response-box" style="display: none;"></div>
+        </div>
+
+        <div id="interactiveQuiz">
+            <div id="progressText" style="text-align: center; margin-bottom: 10px; color: var(--primary-color); font-weight: bold;">Pregunta 1 de 4</div>
+            <div class="question-text" id="questionDisplay">Cargando...</div>
+            <div class="options-grid" id="optionsContainer">
+                </div>
+            <div id="nextBtnContainer" style="display: none;">
+                <button id="nextBtn">Siguiente Pregunta ➔</button>
+                <p style="font-size: 0.8rem; margin-top: 5px; opacity: 0.7;">Avanzando automáticamente en 4 segundos...</p>
+            </div>
+        </div>
+
+        <div id="resultModule" style="display: none; text-align: center; margin-top: 20px;">
+            <h2 id="finalScoreText"></h2>
+            <p id="finalFeedback" style="margin-bottom: 20px;"></p>
+            <button id="restartBtn">Aprender un nuevo tema</button>
         </div>
     </section>
 
@@ -249,7 +190,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-        // Configuración de Firebase provista
         const firebaseConfig = {
             apiKey: "AIzaSyCVhhY19Co-XtLb-U3pp56aH1IWqViOjyg",
             authDomain: "innova-eduia.firebaseapp.com",
@@ -262,102 +202,197 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
-
         const GROQ_API_KEY = "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";
 
-        // Elementos DOM
-        const authSection = document.getElementById('authSection');
-        const appSection = document.getElementById('appSection');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const authMessage = document.getElementById('authMessage');
-
-        // Estado de Autenticación
+        // Autenticación (Se mantiene igual)
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                authSection.style.display = 'none';
-                appSection.style.display = 'block';
-                logoutBtn.style.display = 'block';
+                document.getElementById('authSection').style.display = 'none';
+                document.getElementById('appSection').style.display = 'block';
+                document.getElementById('logoutBtn').style.display = 'block';
             } else {
-                authSection.style.display = 'block';
-                appSection.style.display = 'none';
-                logoutBtn.style.display = 'none';
+                document.getElementById('authSection').style.display = 'block';
+                document.getElementById('appSection').style.display = 'none';
+                document.getElementById('logoutBtn').style.display = 'none';
             }
         });
 
-        // Eventos Auth
         document.getElementById('loginBtn').addEventListener('click', () => {
-            const email = document.getElementById('emailInput').value;
-            const pass = document.getElementById('passwordInput').value;
-            if(!email || !pass) return;
-            signInWithEmailAndPassword(auth, email, pass).catch(err => authMessage.innerText = "Error: Credenciales incorrectas.");
+            signInWithEmailAndPassword(auth, document.getElementById('emailInput').value, document.getElementById('passwordInput').value)
+                .catch(err => document.getElementById('authMessage').innerText = "Credenciales incorrectas.");
         });
 
-        document.getElementById('registerBtn').addEventListener('click', () => {
-            const email = document.getElementById('emailInput').value;
-            const pass = document.getElementById('passwordInput').value;
-            if(!email || !pass) return;
-            createUserWithEmailAndPassword(auth, email, pass).then(() => {
-                authMessage.style.color = "green";
-                authMessage.innerText = "¡Cuenta creada con éxito!";
-            }).catch(err => authMessage.innerText = "Error: " + err.message);
-        });
+        document.getElementById('googleBtn').addEventListener('click', () => signInWithPopup(auth, provider));
+        document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
 
-        document.getElementById('googleBtn').addEventListener('click', () => {
-            signInWithPopup(auth, provider).catch(err => authMessage.innerText = "Error al conectar con Google.");
-        });
-
-        logoutBtn.addEventListener('click', () => signOut(auth));
-
-        // Transición de Ciclo Día / Noche e Intercambio de Imágenes de Avonni
+        // Tema Día/Noche
         let isNight = false;
         document.getElementById('themeToggle').addEventListener('click', () => {
             isNight = !isNight;
-            const htmlElement = document.documentElement;
-            const mascot = document.getElementById('avonniMascot');
-            
-            if (isNight) {
-                htmlElement.setAttribute('data-theme', 'pastel');
-                mascot.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF0g1gu2OtwztjwyOTH8rFyUKQZ7AzocKcB2SMkbpzPvw31T0hD_wOobc&s=10";
-                document.getElementById('avonniGreeting').innerText = "Ciclo nocturno activo. Despeja tu mente descubriendo cosas nuevas.";
-            } else {
-                htmlElement.setAttribute('data-theme', 'futuristic');
-                mascot.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTanSWB5jr0EODA8gRTdBTb5PojVyuR2HAlL5T9zAP8-kqe8Sm8DXTh7XI&s=10";
-                document.getElementById('avonniGreeting').innerText = "¡Hola! Soy Avonni IA. Pon a prueba tus ideas conmigo.";
-            }
+            document.documentElement.setAttribute('data-theme', isNight ? 'pastel' : 'futuristic');
+            document.getElementById('avonniMascot').src = isNight 
+                ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF0g1gu2OtwztjwyOTH8rFyUKQZ7AzocKcB2SMkbpzPvw31T0hD_wOobc&s=10" 
+                : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTanSWB5jr0EODA8gRTdBTb5PojVyuR2HAlL5T9zAP8-kqe8Sm8DXTh7XI&s=10";
         });
 
-        // Consumo de API Groq (Formulación Estricta de 4 Preguntas)
+        // --- LÓGICA DEL CUESTIONARIO INTERACTIVO ---
+        let quizData = [];
+        let currentQ = 0;
+        let score = 0;
+        let totalQuestionsTarget = 4; // Empezamos con el objetivo de 4 preguntas
+        let autoNextTimeout;
+
         document.getElementById('askBtn').addEventListener('click', async () => {
             const topic = document.getElementById('topicInput').value;
-            const responseBox = document.getElementById('chatResponse');
-            
             if(!topic) return;
-            responseBox.style.display = 'block';
-            responseBox.innerHTML = "<em>Avonni está formulando tus preguntas interactivas...</em>";
 
-            const promptText = `El usuario quiere aprender sobre el tema: "${topic}". Como la inteligencia artificial Avonni, actúa como un tutor interactivo. NO le des la definición ni le des la respuesta directa bajo ninguna circunstancia. En su lugar, vas a formular exactamente un cuestionario de 4 preguntas de opción múltiple relacionadas con ese tema. Cada pregunta debe tener opciones claras indicando cuáles son correctas o incorrectas para guiar al estudiante a construir su propio conocimiento de manera didáctica. Termina con un mensaje motivador.`;
+            // Cambiar UI a estado de carga
+            document.getElementById('topicModule').style.display = 'none';
+            document.getElementById('avonniGreeting').innerText = "Generando tu desafío. Pensando...";
+            
+            // PROMPT ESTRICTO JSON: Pedimos 5 preguntas por si necesita la extra
+            const promptText = `Crea un quiz sobre: "${topic}". Devuelve ÚNICAMENTE un formato JSON válido y nada más. La estructura exacta debe ser:
+            {
+                "preguntas": [
+                    {
+                        "pregunta": "¿Texto de la pregunta?",
+                        "opciones": ["Opción 1", "Opción 2", "Opción 3", "Opción 4"],
+                        "correctaIndex": 0
+                    }
+                ]
+            }
+            Genera exactamente 5 preguntas. El "correctaIndex" debe ser un número del 0 al 3. NO agregues texto fuera del JSON.`;
 
             try {
                 const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                     method: "POST",
-                    headers: {
-                        "Authorization": `Bearer ${GROQ_API_KEY}`,
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Authorization": `Bearer ${GROQ_API_KEY}`, "Content-Type": "application/json" },
                     body: JSON.stringify({
                         model: "llama-3.1-8b-instant",
                         messages: [{ role: "user", content: promptText }],
-                        temperature: 0.7
+                        temperature: 0.3 // Baja temperatura para asegurar formato JSON
                     })
                 });
 
                 const data = await response.json();
-                const structuredText = data.choices[0].message.content.replace(/\n/g, '<br>');
-                responseBox.innerHTML = `<div>${structuredText}</div>`;
+                // Limpiar posibles etiquetas markdown del JSON
+                let rawContent = data.choices[0].message.content;
+                let cleanJson = rawContent.replace(/```json/g, '').replace(/```/g, '').trim();
+                
+                quizData = JSON.parse(cleanJson).preguntas;
+                
+                // Iniciar juego
+                currentQ = 0;
+                score = 0;
+                totalQuestionsTarget = 4; // Por defecto son 4
+                document.getElementById('avonniGreeting').innerText = "¡Comencemos! Demuestra lo que sabes.";
+                document.getElementById('interactiveQuiz').style.display = 'block';
+                showQuestion();
+
             } catch (error) {
-                responseBox.innerHTML = "Error al intentar enlazar con los sistemas de Avonni IA.";
                 console.error(error);
+                document.getElementById('avonniGreeting').innerText = "Hubo un error al procesar el tema. Intenta de nuevo.";
+                document.getElementById('topicModule').style.display = 'block';
             }
+        });
+
+        function showQuestion() {
+            document.getElementById('nextBtnContainer').style.display = 'none';
+            const qData = quizData[currentQ];
+            document.getElementById('progressText').innerText = `Pregunta ${currentQ + 1} de ${totalQuestionsTarget}`;
+            document.getElementById('questionDisplay').innerText = qData.pregunta;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = ''; // Limpiar opciones anteriores
+
+            qData.opciones.forEach((opcion, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opcion;
+                btn.onclick = () => selectAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectAnswer(selectedIndex, btnElement) {
+            const qData = quizData[currentQ];
+            const allBtns = document.querySelectorAll('.option-btn');
+            
+            // Deshabilitar todos los botones
+            allBtns.forEach(b => b.disabled = true);
+
+            // Validar respuesta
+            if (selectedIndex === qData.correctaIndex) {
+                btnElement.classList.add('correct');
+                score++;
+                document.getElementById('avonniGreeting').innerText = "¡Correcto! Excelente deducción.";
+            } else {
+                btnElement.classList.add('incorrect');
+                // Resaltar la correcta automáticamente
+                allBtns[qData.correctaIndex].classList.add('correct');
+                document.getElementById('avonniGreeting').innerText = "Uy, casi. Presta atención a la correcta.";
+            }
+
+            // Mostrar botón siguiente y activar temporizador de 4 segundos
+            document.getElementById('nextBtnContainer').style.display = 'block';
+            autoNextTimeout = setTimeout(advanceToNext, 4000);
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            clearTimeout(autoNextTimeout); // Si el usuario hace clic, cancelamos el timer
+            advanceToNext();
+        });
+
+        function advanceToNext() {
+            currentQ++;
+
+            // Lógica de la pregunta extra si saca 3 de 4
+            if (currentQ === 4 && totalQuestionsTarget === 4) {
+                if (score === 3) {
+                    totalQuestionsTarget = 5; // Activar la pregunta de desempate
+                    document.getElementById('avonniGreeting').innerText = "¡Obtuviste 3 de 4! Aquí tienes una pregunta extra para demostrar tu maestría.";
+                    showQuestion();
+                    return;
+                } else {
+                    finishQuiz();
+                    return;
+                }
+            } else if (currentQ >= totalQuestionsTarget) {
+                finishQuiz();
+                return;
+            }
+
+            document.getElementById('avonniGreeting').innerText = "¿Listo para la siguiente?";
+            showQuestion();
+        }
+
+        function finishQuiz() {
+            document.getElementById('interactiveQuiz').style.display = 'none';
+            document.getElementById('resultModule').style.display = 'block';
+            
+            const finalScoreText = document.getElementById('finalScoreText');
+            const finalFeedback = document.getElementById('finalFeedback');
+            
+            finalScoreText.innerText = `Tu puntaje final: ${score} / ${totalQuestionsTarget}`;
+            document.getElementById('avonniMascot').src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTanSWB5jr0EODA8gRTdBTb5PojVyuR2HAlL5T9zAP8-kqe8Sm8DXTh7XI&s=10"; // Volver a cara feliz
+
+            if (score === totalQuestionsTarget) {
+                finalFeedback.innerText = "¡Impecable! Tienes un dominio total sobre este tema.";
+                document.getElementById('avonniGreeting').innerText = "¡Misión Cumplida!";
+            } else if (score >= totalQuestionsTarget / 2) {
+                finalFeedback.innerText = "¡Buen trabajo! Estás en buen camino para dominarlo por completo.";
+                document.getElementById('avonniGreeting').innerText = "Nada mal, sigue practicando.";
+            } else {
+                finalFeedback.innerText = "Parece que este tema es nuevo para ti. ¡Lo importante es que hoy aprendiste algo nuevo!";
+                document.getElementById('avonniGreeting').innerText = "Todo experto fue principiante alguna vez.";
+            }
+        }
+
+        document.getElementById('restartBtn').addEventListener('click', () => {
+            document.getElementById('resultModule').style.display = 'none';
+            document.getElementById('topicModule').style.display = 'block';
+            document.getElementById('topicInput').value = '';
+            document.getElementById('avonniGreeting').innerText = "¿Qué tema quieres dominar hoy?";
         });
     </script>
 </body>
