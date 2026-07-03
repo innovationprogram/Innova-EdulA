@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Innova EduIA - Cuestionario e Interfaz de Escaneo</title>
     
+    <!-- Librerías de procesamiento para PDFs e Imágenes en tiempo real -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
@@ -300,12 +301,14 @@
     </header>
 
     <div class="main-wrapper">
+        <!-- Panel de Navegación Lateral Izquierdo -->
         <aside id="sidebar">
-            <button class="nav-btn active" id="btnNavApp">📝 Cuestionario Inverso</button>
-            <button class="nav-btn" id="btnNavScanner">🔍 Escáner IA</button>
+            <button class="nav-btn active" id="btnNavApp">Cuestionario</button>
+            <button class="nav-btn" id="btnNavScanner">Escáner IA</button>
         </aside>
 
         <div class="content-area">
+            <!-- Sección de Autenticación -->
             <section id="authSection" class="container">
                 <h2>Ingreso al Sistema</h2>
                 <div class="auth-box">
@@ -319,6 +322,7 @@
                 <div id="authMessage" style="color: #ff6b6b; text-align: center; margin-top: 15px; font-size: 0.9rem;"></div>
             </section>
 
+            <!-- Módulo 1: Cuestionario -->
             <section id="appSection" class="container animate-3d-enter" style="display: none;">
                 <div class="avonni-container">
                     <img id="avonniMascot" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTanSWB5jr0EODA8gRTdBTb5PojVyuR2HAlL5T9zAP8-kqe8Sm8DXTh7XI&s=10" alt="Avonni IA" class="floating">
@@ -326,7 +330,7 @@
                 </div>
 
                 <div id="quizModule">
-                    <h3>Cuestionario Inverso Dinámico</h3>
+                    <h3>Cuestionario</h3>
                     <p style="margin-bottom: 1rem; text-align: center; font-size: 0.95rem; opacity: 0.8;">
                         Dime qué tema quieres aprender. No te daré la respuesta directa; generaré 4 preguntas estratégicas para que descubras el conocimiento por ti mismo.
                     </p>
@@ -338,19 +342,20 @@
                 </div>
             </section>
 
+            <!-- Módulo 2: Escáner IA Completo -->
             <section id="scannerSection" class="scanner-card" style="display: none;">
-                <h2>🔍 Escáner Analítico IA</h2>
+                <h2>Escáner Analítico IA</h2>
                 <p>Sube imágenes para OCR, documentos en formato PDF, archivos planos de texto o escribe directamente el fragmento para auditar el porcentaje de probabilidad de creación artificial.</p>
                 
                 <div class="scanner-container-box">
                     <div class="file-input-wrapper">
-                        <label for="fileUpload" style="font-weight: bold; color: #4a5568; cursor: pointer;">📂 Cargar Documento / Foto:</label>
+                        <label for="fileUpload" style="font-weight: bold; color: #4a5568; cursor: pointer;">Cargar Documento / Foto:</label>
                         <input type="file" id="fileUpload" accept=".txt,.pdf,image/*" style="flex: 1; color: #4a5568;">
                     </div>
                     
                     <textarea id="scannerInputText" class="scanner-textarea" placeholder="El texto extraído aparecerá aquí automáticamente, o puedes pegarlo directamente..."></textarea>
                     
-                    <button id="scanExecuteBtn" class="scanner-action-btn">⚡ Analizar Probabilidad</button>
+                    <button id="scanExecuteBtn" class="scanner-action-btn">Analizar Probabilidad</button>
                 </div>
 
                 <div id="scannerResultBox" class="scanner-result-display" style="display: none;"></div>
@@ -479,7 +484,7 @@
             }
         });
 
-        // Consumo de API Groq (Cuestionario Inverso)
+        // Consumo de API Groq (Cuestionario)
         document.getElementById('askBtn').addEventListener('click', async () => {
             const topic = document.getElementById('topicInput').value;
             const responseBox = document.getElementById('chatResponse');
@@ -521,7 +526,7 @@
             if (!file) return;
 
             scannerResultBox.style.display = 'block';
-            scannerResultBox.innerHTML = "<em>⏳ Leyendo y procesando el archivo adjunto... Por favor, espera.</em>";
+            scannerResultBox.innerHTML = "<em>Leyendo y procesando el archivo adjunto... Por favor, espera.</em>";
 
             try {
                 if (file.type === "text/plain") {
@@ -540,11 +545,11 @@
                     scannerInputText.value = extractedText;
                     scannerResultBox.style.display = 'none';
                 } else {
-                    scannerResultBox.innerHTML = "❌ Formato no compatible de manera automatizada. Prueba copiando y pegando el texto.";
+                    scannerResultBox.innerHTML = "Formato no compatible de manera automatizada. Prueba copiando y pegando el texto.";
                 }
             } catch (err) {
                 console.error(err);
-                scannerResultBox.innerHTML = "❌ Ocurrió un error al intentar extraer el contenido textual del archivo.";
+                scannerResultBox.innerHTML = "Ocurrió un error al intentar extraer el contenido textual del archivo.";
             }
         });
 
@@ -577,7 +582,7 @@
             }
 
             scannerResultBox.style.display = 'block';
-            scannerResultBox.innerHTML = "<em>🧠 Analizando estructuras sintácticas y patrones con Groq...</em>";
+            scannerResultBox.innerHTML = "<em>Analizando estructuras sintácticas y patrones con Groq...</em>";
 
             const promptDetection = `Actúa como un software de detección forense de Inteligencia Artificial. Analiza minuciosamente el siguiente texto y determina la probabilidad (de 0% a 100%) de que haya sido generado por un modelo de lenguaje artificial. Tu respuesta debe iniciar obligatoriamente con la línea estructurada: "Porcentaje estimado de IA: [X]%" en negrita. En las líneas siguientes, añade una justificación analítica de 2 a 3 líneas explicando si se observan repeticiones mecánicas, falta de variabilidad natural o estructuras demasiado predecibles. Texto: "${textToAnalyze}"`;
 
@@ -597,9 +602,9 @@
 
                 const data = await response.json();
                 const resultText = data.choices[0].message.content.replace(/\n/g, '<br>');
-                scannerResultBox.innerHTML = `<div>📊 <strong>Métricas del Análisis de Contenido:</strong><br><br>${resultText}</div>`;
+                scannerResultBox.innerHTML = `<div><strong>Métricas del Análisis de Contenido:</strong><br><br>${resultText}</div>`;
             } catch (error) {
-                scannerResultBox.innerHTML = "❌ Falló el enlace de comunicación con los sistemas de análisis.";
+                scannerResultBox.innerHTML = "Falló el enlace de comunicación con los sistemas de análisis.";
                 console.error(error);
             }
         });
